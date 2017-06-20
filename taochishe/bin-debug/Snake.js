@@ -25,6 +25,31 @@ var Snake = (function (_super) {
         if (gotoY < 0 || gotoY > Main.STAGE_H) {
             this.direction.y *= -1;
         }
+        this.updateBody();
+    };
+    p.updateBody = function () {
+        for (var i = 0; i < this.bodyNodes.length; i++) {
+            if (i == 0) {
+                continue;
+            }
+            var p1x = this.bodyNodes[i - 1].x;
+            var p1y = this.bodyNodes[i - 1].y;
+            var p2x = this.bodyNodes[i].x;
+            var p2y = this.bodyNodes[i].y;
+            var p = PointUtils.getOppositePosition(p1x, p1y, PointUtils.getDirction(new egret.Point(p1x, p1y), new egret.Point(p2x, p2y)), BodyNode.HALF_LONG);
+            this.bodyNodes[i].x = p.x;
+            this.bodyNodes[i].y = p.y;
+        }
+    };
+    p.eat = function (food) {
+        food.parent.removeChild(food);
+        food.node.x = food.x;
+        food.node.y = food.y;
+        this.xiaohua(food.node);
+    };
+    p.xiaohua = function (node) {
+        this.bodyNodes.push(node);
+        this.addChild(node);
     };
     p.updateDirection = function (e) {
         var x = e.stageX;

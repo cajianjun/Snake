@@ -125,9 +125,36 @@ class Main extends egret.DisplayObjectContainer {
     public touched(e:egret.TouchEvent):void{
         this.snake.updateDirection(e);
     }
+    public onEnterFrame(e:egret.TouchEvent):void{
+       this.isEaten();
+
+    }
+     //judge wheather food will be eaten by snake
+    public isEaten():boolean{
+        var sx:number = this.snake.x;
+        var sy:number = this.snake.y;
+        var fx:number = this.curFood.x;
+        var fy:number = this.curFood.y;
+        if(this.distence(sx,sy,fx,fy) <= BodyNode.HALF_LONG * 2){
+            this.snake.eat(this.curFood);
+            this.curFood = new Food();
+            this.addChild(this.curFood);
+            return true;
+        }
+        return false;
+    }
+
+    public distence(x1,y1,x2,y2):number{
+        var dx:number = x2-x1;
+        var dy:number = y2-y1;
+        var tmpNum = Math.sqrt(dx*dx + dy*dy); 
+        return tmpNum;
+    }
     private snake:Snake;
+    private curFood:Food;
     private createGameScene():void {
         this.$setTouchEnabled(true);
+        this.addEventListener(egret.Event.ENTER_FRAME,this.onEnterFrame,this);
         this.addEventListener(egret.TouchEvent.TOUCH_BEGIN,this.touched,this);
         this.addEventListener(egret.TouchEvent.TOUCH_MOVE,this.touched,this);
         Main.STAGE_H = this.stageH = this.stage.stageHeight;
@@ -145,8 +172,8 @@ class Main extends egret.DisplayObjectContainer {
         this.snake = new Snake();
         this.addChild(this.snake);
 
-        var food:Food = new Food();
-        this.addChild(food);
+        this.curFood = new Food();
+        this.addChild(this.curFood);
         // var sky:egret.Bitmap = this.createBitmapByName("bg_jpg");
         // this.addChild(sky);
         // var stageW:number = this.stage.stageWidth;

@@ -1,6 +1,6 @@
 class Food extends egret.Sprite {
 
-    
+    public node :BodyNode;
 
     public constructor() {
         super();
@@ -9,10 +9,10 @@ class Food extends egret.Sprite {
 
 
     private createView():void {
-        var node:BodyNode = new BodyNode();
-        this.addChild(node);
-        node.x = Math.random()*Main.STAGE_W;
-        node.y = Math.random()*Main.STAGE_H;
+        this.node = new BodyNode();
+        this.addChild(this.node);
+        this.x = Math.random()*Main.STAGE_W;
+        this.y = Math.random()*Main.STAGE_H;
         
     }
 

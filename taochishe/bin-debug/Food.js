@@ -6,10 +6,10 @@ var Food = (function (_super) {
     }
     var d = __define,c=Food,p=c.prototype;
     p.createView = function () {
-        var node = new BodyNode();
-        this.addChild(node);
-        node.x = Math.random() * Main.STAGE_W;
-        node.y = Math.random() * Main.STAGE_H;
+        this.node = new BodyNode();
+        this.addChild(this.node);
+        this.x = Math.random() * Main.STAGE_W;
+        this.y = Math.random() * Main.STAGE_H;
     };
     return Food;
 }(egret.Sprite));

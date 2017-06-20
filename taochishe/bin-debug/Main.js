@@ -104,8 +104,32 @@ var Main = (function (_super) {
     p.touched = function (e) {
         this.snake.updateDirection(e);
     };
+    p.onEnterFrame = function (e) {
+        this.isEaten();
+    };
+    //judge wheather food will be eaten by snake
+    p.isEaten = function () {
+        var sx = this.snake.x;
+        var sy = this.snake.y;
+        var fx = this.curFood.x;
+        var fy = this.curFood.y;
+        if (this.distence(sx, sy, fx, fy) <= BodyNode.HALF_LONG * 2) {
+            this.snake.eat(this.curFood);
+            this.curFood = new Food();
+            this.addChild(this.curFood);
+            return true;
+        }
+        return false;
+    };
+    p.distence = function (x1, y1, x2, y2) {
+        var dx = x2 - x1;
+        var dy = y2 - y1;
+        var tmpNum = Math.sqrt(dx * dx + dy * dy);
+        return tmpNum;
+    };
     p.createGameScene = function () {
         this.$setTouchEnabled(true);
+        this.addEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
         this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.touched, this);
         this.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.touched, this);
         Main.STAGE_H = this.stageH = this.stage.stageHeight;
@@ -121,8 +145,8 @@ var Main = (function (_super) {
         //create snake
         this.snake = new Snake();
         this.addChild(this.snake);
-        var food = new Food();
-        this.addChild(food);
+        this.curFood = new Food();
+        this.addChild(this.curFood);
         // var sky:egret.Bitmap = this.createBitmapByName("bg_jpg");
         // this.addChild(sky);
         // var stageW:number = this.stage.stageWidth;

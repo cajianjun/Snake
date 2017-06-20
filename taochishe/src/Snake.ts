@@ -24,7 +24,37 @@ class Snake extends egret.Sprite {
         if(gotoY < 0 || gotoY > Main.STAGE_H){
             this.direction.y *= -1;
         }
+        this.updateBody();
+    }
+
+    public updateBody(){
+
         
+        for(var i = 0;i < this.bodyNodes.length;i ++){
+            if(i == 0){
+                continue;
+            }
+            var p1x:number = this.bodyNodes[i-1].x;
+            var p1y:number = this.bodyNodes[i-1].y;
+            var p2x:number = this.bodyNodes[i].x;
+            var p2y:number = this.bodyNodes[i].y;
+            var p:egret.Point = PointUtils.getOppositePosition(p1x,p1y,PointUtils.getDirction(new egret.Point(p1x,p1y),new egret.Point(p2x,p2y)),BodyNode.HALF_LONG);
+            this.bodyNodes[i].x = p.x;
+            this.bodyNodes[i].y = p.y;
+        }
+
+    }
+
+    public eat(food:Food){
+        food.parent.removeChild(food);
+        food.node.x = food.x;
+        food.node.y = food.y;
+        this.xiaohua(food.node);
+    }
+
+    public xiaohua(node:BodyNode){
+        this.bodyNodes.push(node);
+        this.addChild(node);
     }
 
     public updateDirection(e:egret.TouchEvent){

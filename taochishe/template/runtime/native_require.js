@@ -8,6 +8,7 @@ var game_file_list = [
 	"libs/modules/game/game.native.js",
 	"libs/modules/res/res.js",
 	"libs/modules/tween/tween.js",
+	"bin-debug/BaseUnit.js",
 	"bin-debug/BodyNode.js",
 	"bin-debug/ColorUtils.js",
 	"bin-debug/Food.js",

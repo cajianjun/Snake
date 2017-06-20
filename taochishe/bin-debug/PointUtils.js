@@ -12,6 +12,11 @@ var PointUtils = (function () {
         var length = Math.sqrt(dx * dx + dy * dy);
         return new egret.Point(dx / length, dy / length);
     };
+    PointUtils.getOppositePosition = function (x, y, direction, distance) {
+        var px = x - direction.x * distance;
+        var py = y - direction.y * distance;
+        return new egret.Point(px, py);
+    };
     return PointUtils;
 }());
 egret.registerClass(PointUtils,'PointUtils');
