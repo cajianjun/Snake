@@ -1,4 +1,5 @@
 class Snake extends egret.Sprite {
+    private maxRotationSpeed:number = 5;//max rotate degree per frame
     private speed:number = 10;
     private direction:egret.Point = new egret.Point(0,1);
     private bodyNodes:Array<BodyNode> = [];
