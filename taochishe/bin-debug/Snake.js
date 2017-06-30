@@ -2,6 +2,7 @@ var Snake = (function (_super) {
     __extends(Snake, _super);
     function Snake() {
         _super.call(this);
+        this.maxRotationSpeed = 5; //max rotate degree per frame
         this.speed = 10;
         this.direction = new egret.Point(0, 1);
         this.bodyNodes = [];
@@ -36,7 +37,7 @@ var Snake = (function (_super) {
             var p1y = this.bodyNodes[i - 1].y;
             var p2x = this.bodyNodes[i].x;
             var p2y = this.bodyNodes[i].y;
-            var p = PointUtils.getOppositePosition(p1x, p1y, PointUtils.getDirction(new egret.Point(p2x, p2y), new egret.Point(p1x, p1y)), BodyNode.HALF_LONG);
+            var p = PointUtils.getOppositePosition(p1x, p1y, PointUtils.getDirction(new egret.Point(p1x, p1y), new egret.Point(p2x, p2y)), BodyNode.HALF_LONG);
             this.bodyNodes[i].x = p.x;
             this.bodyNodes[i].y = p.y;
         }
@@ -56,7 +57,8 @@ var Snake = (function (_super) {
         var y = e.stageY;
         var nowX = this.x;
         var nowY = this.y;
-        this.direction = PointUtils.getDirction(new egret.Point(nowX, nowY), new egret.Point(x, y));
+        this.direction = PointUtils.rotateToDirection(new egret.Point(x, y), new egret.Point(nowX, nowY), this.speed);
+        //PointUtils.getDirction(new egret.Point(nowX,nowY),new egret.Point(x,y));
     };
     return Snake;
 }(egret.Sprite));

@@ -63,7 +63,8 @@ class Snake extends egret.Sprite {
         var y = e.stageY;
         var nowX = this.x;
         var nowY = this.y;
-        this.direction  = PointUtils.getDirction(new egret.Point(nowX,nowY),new egret.Point(x,y));
+        this.direction  = PointUtils.rotateToDirection(new egret.Point(x,y),new egret.Point(nowX,nowY),this.speed)
+        //PointUtils.getDirction(new egret.Point(nowX,nowY),new egret.Point(x,y));
     }
 
 
